@@ -1,26 +1,22 @@
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.Test;
-import stellarburgers.User;
-import stellarburgers.UserMethods;
-import stellarburgers.UserGenerator;
-import stellarburgers.AccountPage;
-import stellarburgers.LoginPage;
-import stellarburgers.MainPage;
+import ru.yandex.stellarburgers.User;
+import ru.yandex.stellarburgers.UserMethods;
+import ru.yandex.stellarburgers.UserGenerator;
+import ru.yandex.stellarburgers.AccountPage;
+import ru.yandex.stellarburgers.LoginPage;
+import ru.yandex.stellarburgers.MainPage;
 
 public class LogoutTest extends Main {
-
     private User user;
     private UserMethods userMethods;
-
     MainPage mainPage;
     LoginPage loginPage;
     AccountPage accountPage;
-
     @Test
     @DisplayName("Выход по кнопке <Выйти> в личном кабинете")
     public void accountExitButtonTest() {
-
         String accessToken;
         user = new User();
         userMethods = UserGenerator.getUser();

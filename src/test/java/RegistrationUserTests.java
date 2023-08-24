@@ -2,17 +2,16 @@ import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.Before;
 import org.junit.Test;
-import stellarburgers.User;
-import stellarburgers.UserMethods;
-import stellarburgers.UserCredentials;
-import stellarburgers.LoginPage;
-import stellarburgers.MainPage;
-import stellarburgers.RegistrationPage;
-import stellarburgers.UserGenerator;
+import ru.yandex.stellarburgers.User;
+import ru.yandex.stellarburgers.UserMethods;
+import ru.yandex.stellarburgers.UserCredentials;
+import ru.yandex.stellarburgers.LoginPage;
+import ru.yandex.stellarburgers.MainPage;
+import ru.yandex.stellarburgers.RegistrationPage;
+import ru.yandex.stellarburgers.UserGenerator;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 public class RegistrationUserTests extends Main {
-
     private String accessToken;
     private User user;
     MainPage mainPage;
@@ -21,13 +20,12 @@ public class RegistrationUserTests extends Main {
     @Before
     public void setUp() {
         user = new User();
+        mainPage = new MainPage(webDriver);
+        mainPage.openPage();
     }
-
     @Test
     @DisplayName("Успешная регистрация")
     public void checkRegistration() {
-        mainPage = new MainPage(webDriver);
-        mainPage.openPage();
         UserMethods userMethods = UserGenerator.getUser();
         mainPage.clickLoginButton();
         loginPage = new LoginPage(webDriver);
@@ -42,13 +40,11 @@ public class RegistrationUserTests extends Main {
                 .body("success", equalTo(true));
         accessToken = loginResponse.extract().path("accessToken");
         user.deleteUser(accessToken);
+        System.out.println("Удален - " + accessToken);
     }
-
     @Test
     @DisplayName("Ошибка некорректного пароля")
     public void checkRegistrationWithIncorrectPassword() {
-        mainPage = new MainPage(webDriver);
-        mainPage.openPage();
         UserMethods userMethods = UserGenerator.getIncorrectPasswordUser();
         mainPage.clickLoginButton();
         loginPage = new LoginPage(webDriver);
